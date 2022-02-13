@@ -15,7 +15,7 @@ print "Usage: Python2 run.py login-jwt file.txt (file.txt contains the json body
 
 def post(url):
    headers = {"Content-Type":"application/json","Connection":"Close","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36","Cookie":"connect.sid=s%3A3vC0ItHuTyxpM2pAArc_KnxRzFtBlfts.3UFhTuv4nUScdJpTUroEwHPmxeS5rUD6QiLAzcliS5g"}
-   re = requests.post('https://app.enzyme.finance/api/graphql',headers=headers,data=url)
+   re = requests.post('https://127.0.0.1/api/graphql',headers=headers,data=url)
    try :
       print "\r\n\r\n\r\n\r\n\r\n\r\nThe Session COOKIE : "+str(re.headers["cookie"])+"\r\n\r\n\r\n\r\n\r\n\r\n"
       print str(re.text)
