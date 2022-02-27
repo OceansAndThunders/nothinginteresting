@@ -3,7 +3,7 @@ pragma solidity 0.6.10;
 contract example {
 
 
-    function checkTxOrigin(address addr) public returns (memory string){
+    function checkTxOrigin(address addr) public returns (string memory){
     
       if(tx.origin == addr) {
           return "checked !";
