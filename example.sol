@@ -3,13 +3,13 @@ pragma solidity 0.6.10;
 
 
 contract example_contract{
- function checkTXO () public returns (string memory) {
+ function checkTXO () public returns (bool) {
    if (tx.origin == msg.sender) {
-         return 'they are the same';
+         return true;
          // do stuff
    }
    else {
-         return 'not the same';
+         return false;
    }
  }
 }
