@@ -1,14 +1,17 @@
 pragma solidity 0.6.10;
 
-contract example {
 
 
-    function checkTxOrigin(address addr) public returns (string memory){
-    
-      if(tx.origin == addr) {
-          return "checked !";
-      }
-      else {
-          return "not origin";
-       }
-    }}
+contract example{
+ function checkTXO (address addr) public returns (string memory) {
+   if (tx.origin == msg.sender) {
+         return 'they are the same';
+         // do stuff
+   }
+   else {
+         return 'not the same';
+   }
+ }
+}
+
+
